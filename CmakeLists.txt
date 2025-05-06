@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.8)
+project(S2_FINAL)
+
+add_executable(map src/mains/main_map.cpp src/prog/map.cpp)
+target_include_directories(map PUBLIC src/headers)
+target_compile_features(map PRIVATE cxx_std_20)
