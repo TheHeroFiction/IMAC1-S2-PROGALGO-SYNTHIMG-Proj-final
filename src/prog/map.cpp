@@ -254,3 +254,4 @@ std::vector<std::vector<char>> cellular_automata(std::vector<std::vector<char>> 
     }
     return new_map;
 }
+
