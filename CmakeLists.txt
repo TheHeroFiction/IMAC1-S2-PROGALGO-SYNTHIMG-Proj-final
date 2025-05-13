@@ -36,3 +36,8 @@ add_executable(map src/mains/main_map.cpp src/prog/map.cpp)
 target_include_directories(map PUBLIC src/headers)
 target_link_libraries(map ${ALL_LIBRARIES})
 target_compile_features(map PRIVATE cxx_std_20)
+
+add_executable(pathfinding src/mains/main_pathfinding.cpp src/prog/pathfinding.cpp)
+target_include_directories(pathfinding PUBLIC src/headers)
+target_link_libraries(pathfinding ${ALL_LIBRARIES})
+target_compile_features(pathfinding PRIVATE cxx_std_20)

@@ -12,9 +12,16 @@ void do_bfs(CellIndex start)
     cell_queue.push(start);
     visited.insert(start);
 
+    int counter{};
+
     // Tant qu'il y a des éléments dans la file, on cherche les cases adjacentes
     while (!cell_queue.empty())
     {
+        if (counter == 8)
+        {
+            break;
+        }
+
         CellIndex current = cell_queue.front();
         cell_queue.pop();
 
@@ -36,5 +43,9 @@ void do_bfs(CellIndex start)
                 cell_queue.push(neighbor);
             }
         }
+
+        counter++;
     }
+
+    std::cout << "Visited size: " << visited.size() << "\n";
 }
