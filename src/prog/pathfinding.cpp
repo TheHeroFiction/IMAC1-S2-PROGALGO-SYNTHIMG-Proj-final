@@ -3,6 +3,32 @@
 #include <set>
 #include <iostream>
 
+unsigned int distance(CellIndex start_cell, CellIndex current_cell)
+{
+    unsigned int distance_x{};
+    unsigned int distance_y{};
+
+    if (start_cell.x < current_cell.x)
+    {
+        distance_x = current_cell.x - start_cell.x;
+    }
+    else
+    {
+        distance_x = start_cell.x - current_cell.x;
+    }
+
+    if (start_cell.y < current_cell.y)
+    {
+        distance_y = current_cell.y - start_cell.y;
+    }
+    else
+    {
+        distance_y = start_cell.y - current_cell.y;
+    }
+
+    return distance_x + distance_y;
+}
+
 void do_bfs(CellIndex start)
 {
     // Création de la file
@@ -26,6 +52,8 @@ void do_bfs(CellIndex start)
         cell_queue.pop();
 
         std::cout << "Visiting: (" << current.x << ", " << current.y << ")\n";
+
+        std::cout << "Distance :" << distance(start, current) << std::endl;
 
         // Les 4 voisins adjacents
         CellIndex neighbors[4] = {
