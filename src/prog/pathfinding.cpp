@@ -26,7 +26,20 @@ unsigned int distance(CellIndex start_cell, CellIndex current_cell)
     return distance_x + distance_y;
 }
 
-void do_bfs(CellIndex start, std::vector<std::vector<char>> map)
+// Vérifie si une position est valide sur la carte
+// La cell est-elle dans la map (donc supérieur ou égale à 0, inférieur à la longueur et largeur de la map, éviter les effets de bords)?
+// La cell n'est pas un mur '#'
+bool is_valid(const CellIndex &cell, const std::vector<std::vector<char>> &map)
+{
+    int height = map.size();
+    int width = map[0].size();
+
+    return cell.x >= 0 && cell.y >= 0 &&
+           cell.x < width && cell.y < height &&
+           map[cell.y][cell.x] != '#'; // '#' = obstacle/mur
+}
+
+void do_bfs(CellIndex start, const std::vector<std::vector<char>> &map)
 {
     // Création de la file
     std::queue<CellIndex> cell_queue;
@@ -42,10 +55,6 @@ void do_bfs(CellIndex start, std::vector<std::vector<char>> map)
     // Tant qu'il y a des éléments dans la file, on cherche les cases adjacentes
     while (!cell_queue.empty() && counter_map < map_size)
     {
-        // if (counter == 8)
-        // {
-        //     break;
-        // }
 
         CellIndex current = cell_queue.front();
         cell_queue.pop();
@@ -65,7 +74,15 @@ void do_bfs(CellIndex start, std::vector<std::vector<char>> map)
         {
             // Exemple de condition pour éviter d'aller dans des coordonnées négatives
             // On évite aussi les effets de bord
-            if (neighbor.x >= 0 && neighbor.y >= 0 && visited.find(neighbor) == visited.end() && neighbor.x < map.size() && neighbor.y < map[0].size())
+            // std::cout << is_valid(neighbor, map) << std::endl;
+
+            // if (neighbor.x >= 0 && neighbor.y >= 0 && visited.find(neighbor) == visited.end() && neighbor.x < map.size() && neighbor.y < map[0].size() && is_valid(neighbor, map))
+            // {
+            //     visited.insert(neighbor);
+            //     cell_queue.push(neighbor);
+            // }
+
+            if (is_valid(neighbor, map) && visited.find(neighbor) == visited.end())
             {
                 visited.insert(neighbor);
                 cell_queue.push(neighbor);
@@ -73,7 +90,6 @@ void do_bfs(CellIndex start, std::vector<std::vector<char>> map)
         }
 
         counter_map++;
-        // counter++;
     }
 
     std::cout << "Visited size: " << visited.size() << "\n";
