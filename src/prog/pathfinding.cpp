@@ -1,7 +1,4 @@
 #include "pathfinding.hpp"
-#include <queue>
-#include <set>
-#include <iostream>
 
 unsigned int distance(CellIndex start_cell, CellIndex current_cell)
 {
@@ -29,7 +26,7 @@ unsigned int distance(CellIndex start_cell, CellIndex current_cell)
     return distance_x + distance_y;
 }
 
-void do_bfs(CellIndex start)
+void do_bfs(CellIndex start, std::vector<std::vector<char>> map)
 {
     // Création de la file
     std::queue<CellIndex> cell_queue;
@@ -39,14 +36,16 @@ void do_bfs(CellIndex start)
     visited.insert(start);
 
     int counter{};
+    size_t counter_map{};
+    size_t map_size{map.size() * map[0].size()};
 
     // Tant qu'il y a des éléments dans la file, on cherche les cases adjacentes
-    while (!cell_queue.empty())
+    while (!cell_queue.empty() && counter_map < map_size)
     {
-        if (counter == 8)
-        {
-            break;
-        }
+        // if (counter == 8)
+        // {
+        //     break;
+        // }
 
         CellIndex current = cell_queue.front();
         cell_queue.pop();
@@ -65,15 +64,19 @@ void do_bfs(CellIndex start)
         for (auto &neighbor : neighbors)
         {
             // Exemple de condition pour éviter d'aller dans des coordonnées négatives
-            if (neighbor.x >= 0 && neighbor.y >= 0 && visited.find(neighbor) == visited.end())
+            // On évite aussi les effets de bord
+            if (neighbor.x >= 0 && neighbor.y >= 0 && visited.find(neighbor) == visited.end() && neighbor.x < map.size() && neighbor.y < map[0].size())
             {
                 visited.insert(neighbor);
                 cell_queue.push(neighbor);
             }
         }
 
-        counter++;
+        counter_map++;
+        // counter++;
     }
 
     std::cout << "Visited size: " << visited.size() << "\n";
+    std::cout << map_size << "\n";
+    std::cout << counter_map << "\n";
 }

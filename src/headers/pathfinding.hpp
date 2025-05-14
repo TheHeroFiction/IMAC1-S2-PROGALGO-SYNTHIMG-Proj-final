@@ -1,3 +1,10 @@
+#pragma once
+
+#include <queue>
+#include <set>
+#include <iostream>
+#include <vector>
+
 struct CellIndex
 {
     int x;
@@ -14,4 +21,4 @@ struct CellIndex
     // }
 };
 
-void do_bfs(CellIndex start);
+void do_bfs(CellIndex start, std::vector<std::vector<char>> map);
