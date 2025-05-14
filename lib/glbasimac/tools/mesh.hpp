@@ -51,6 +51,9 @@ namespace STP3D {
 		};
 		~StandardMesh();
 
+		StandardMesh(const StandardMesh&) = delete;
+		StandardMesh& operator= (const StandardMesh&) = delete;
+
 		/// Set the number of elements in each buffers
 		void setNbElt(unsigned int elts) {nb_elts = elts;};
 		void addOneBuffer(unsigned int id_attribute,unsigned int one_elt_size,

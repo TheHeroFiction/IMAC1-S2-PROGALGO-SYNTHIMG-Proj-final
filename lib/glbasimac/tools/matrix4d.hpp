@@ -21,6 +21,9 @@
 #include "vector4d.hpp"
 #include "vector3d.hpp"
 #include <string>
+#ifndef M_PI
+#define M_PI 3.141592653
+#endif
 
 namespace STP3D {
 

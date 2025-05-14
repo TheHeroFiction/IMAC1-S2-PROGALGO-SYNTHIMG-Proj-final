@@ -1,5 +1,16 @@
 #include "map.hpp"
 
+using namespace glbasimac;
+
+//variables
+GLBI_Convex_2D_Shape cell {};
+std::vector<std::vector<float>> cells_coords {};
+std::vector<std::vector<float>> cells_colors {};
+
+std::vector<float> color_floor {1.f,1.f,1.f, 1.f,1.f,1.f, 1.f,1.f,1.f, 1.f,1.f,1.f};
+std::vector<float> color_wall {0.f,0.f,0.f, 0.f,0.f,0.f, 0.f,0.f,0.f, 0.f,0.f,0.f };
+
+//fonctions
 std::vector<std::vector<char>> generate_map(int width, int height)
 {
     std::srand(std::time(nullptr));
@@ -255,3 +266,47 @@ std::vector<std::vector<char>> cellular_automata(std::vector<std::vector<char>> 
     return new_map;
 }
 
+void init_map(std::vector<std::vector<char>> const& map, int width, int height, float view_size)
+{
+    float cell_width {static_cast<float>(width)/static_cast<float>(map.size())};
+    float cell_height {static_cast<float>(height)/static_cast<float>(map[0].size())};
+
+    std::vector<float> coords {};
+    
+    for (int row {0}; row < map.size(); row++)
+    {
+        for (int col {0}; col < map[0].size(); col++)
+        {
+            coords = 
+            {
+                cell_height * row - view_size/2.f, cell_width * col - view_size/2.f, //high left corner
+                cell_height * row - view_size/2.f, cell_width * (col + 1) - view_size/2.f, //high right corner 
+                cell_height * (row + 1) - view_size/2.f, cell_width * (col + 1) - view_size/2.f, // low right corner
+                cell_height * (row + 1) - view_size/2.f, cell_width * col - view_size/2.f // low left corner
+            };
+
+            cells_coords.push_back(coords);
+            
+            if (map[row][col] == '#')
+            {
+                cells_colors.push_back(color_wall);
+            }
+            else
+            {
+                cells_colors.push_back(color_floor);
+            }
+
+            
+        }
+    }
+
+    cell.initShape({0.f,0.f, 0.f,5.f, 5.f,5.f, 5.f,0.f});
+    cell.changeNature(GL_TRIANGLE_FAN);
+}
+
+void render_map()
+{
+    myEngine.setFlatColor(0.5f,0.5f,0.5f);
+    cell.drawShape();
+    std::cout<< cells_coords[0][0] << ',' << cells_coords[0][1] << std::endl;
+}

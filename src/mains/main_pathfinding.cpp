@@ -5,14 +5,7 @@ int main()
 {
     // std::vector<std::vector<char>> new_map{generate_map(50, 50)};
 
-    std::vector<std::vector<char>> map = {
-        {'.', '.', '.', '.', '.'},
-        {'.', '#', '#', '.', '.'},
-        {'.', '.', '.', '#', '.'},
-        {'.', '#', '.', '.', '.'},
-        {'.', '.', '.', '.', '.'}};
-
-    CellIndex start = {2, 2};
-    do_bfs(start, map);
+    CellIndex start = {5, 5};
+    do_bfs(start);
     return 0;
 }

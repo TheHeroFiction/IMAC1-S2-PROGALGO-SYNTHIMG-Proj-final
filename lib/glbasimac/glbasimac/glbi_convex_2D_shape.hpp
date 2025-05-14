@@ -19,6 +19,8 @@ struct GLBI_Convex_2D_Shape {
 		coord_pts.clear();
 	};
 
+	
+
 	void initShape(const std::vector<float> in_coord);
 
 	void changeNature(unsigned int new_gl_type);

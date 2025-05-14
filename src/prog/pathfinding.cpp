@@ -1,68 +1,59 @@
 #include "pathfinding.hpp"
+#include <queue>
+#include <set>
+#include <iostream>
 
-// Calcul de distances sans les obstacles
-// unsigned int distance(CellIndex start_cell, CellIndex current_cell)
-// {
-//     unsigned int distance_x{};
-//     unsigned int distance_y{};
-
-//     if (start_cell.x < current_cell.x)
-//     {
-//         distance_x = current_cell.x - start_cell.x;
-//     }
-//     else
-//     {
-//         distance_x = start_cell.x - current_cell.x;
-//     }
-
-//     if (start_cell.y < current_cell.y)
-//     {
-//         distance_y = current_cell.y - start_cell.y;
-//     }
-//     else
-//     {
-//         distance_y = start_cell.y - current_cell.y;
-//     }
-
-//     return distance_x + distance_y;
-// }
-
-// Vérifie si une position est valide sur la carte
-// La cell est-elle dans la map (donc supérieur ou égale à 0, inférieur à la longueur et largeur de la map, éviter les effets de bords)?
-// La cell n'est pas un mur '#'
-bool is_valid(const CellIndex &cell, const std::vector<std::vector<char>> &map)
+unsigned int distance(CellIndex start_cell, CellIndex current_cell)
 {
-    int height = map.size();
-    int width = map[0].size();
+    unsigned int distance_x{};
+    unsigned int distance_y{};
 
-    return cell.x >= 0 && cell.y >= 0 &&
-           cell.x < width && cell.y < height &&
-           map[cell.y][cell.x] != '#'; // '#' = obstacle/mur
+    if (start_cell.x < current_cell.x)
+    {
+        distance_x = current_cell.x - start_cell.x;
+    }
+    else
+    {
+        distance_x = start_cell.x - current_cell.x;
+    }
+
+    if (start_cell.y < current_cell.y)
+    {
+        distance_y = current_cell.y - start_cell.y;
+    }
+    else
+    {
+        distance_y = start_cell.y - current_cell.y;
+    }
+
+    return distance_x + distance_y;
 }
 
-void do_bfs(CellIndex start, const std::vector<std::vector<char>> &map)
+void do_bfs(CellIndex start)
 {
     // Création de la file
     std::queue<CellIndex> cell_queue;
     std::set<CellIndex> visited;
-    std::vector<std::vector<int>> distance_map(map.size(), std::vector<int>(map[0].size(), -1));
 
     cell_queue.push(start);
     visited.insert(start);
-    distance_map[start.y][start.x] = 0; // Distance du départ à lui-même
 
     int counter{};
-    size_t counter_map{};
-    size_t map_size{map.size() * map[0].size()};
 
     // Tant qu'il y a des éléments dans la file, on cherche les cases adjacentes
-    while (!cell_queue.empty() && counter_map < map_size)
+    while (!cell_queue.empty())
     {
+        if (counter == 8)
+        {
+            break;
+        }
 
         CellIndex current = cell_queue.front();
         cell_queue.pop();
 
         std::cout << "Visiting: (" << current.x << ", " << current.y << ")\n";
+
+        std::cout << "Distance :" << distance(start, current) << std::endl;
 
         // Les 4 voisins adjacents
         CellIndex neighbors[4] = {
@@ -73,19 +64,16 @@ void do_bfs(CellIndex start, const std::vector<std::vector<char>> &map)
 
         for (auto &neighbor : neighbors)
         {
-            if (is_valid(neighbor, map) && visited.find(neighbor) == visited.end())
+            // Exemple de condition pour éviter d'aller dans des coordonnées négatives
+            if (neighbor.x >= 0 && neighbor.y >= 0 && visited.find(neighbor) == visited.end())
             {
                 visited.insert(neighbor);
-                distance_map[neighbor.y][neighbor.x] = distance_map[current.y][current.x] + 1;
                 cell_queue.push(neighbor);
             }
         }
 
-        std::cout << "Distance: " << distance_map[current.y][current.x] << std::endl;
-        counter_map++;
+        counter++;
     }
 
     std::cout << "Visited size: " << visited.size() << "\n";
-    std::cout << map_size << "\n";
-    std::cout << counter_map << "\n";
 }
