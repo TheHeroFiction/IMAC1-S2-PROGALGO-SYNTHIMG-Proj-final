@@ -1,59 +1,46 @@
 #include "pathfinding.hpp"
-#include <queue>
-#include <set>
-#include <iostream>
 
-unsigned int distance(CellIndex start_cell, CellIndex current_cell)
+// Vérifie si une position est valide sur la carte
+// La cell est-elle dans la map (donc supérieur ou égale à 0, inférieur à la longueur et largeur de la map, éviter les effets de bords)?
+// La cell n'est pas un mur '#'
+bool isValid(const CellIndex &cell, const std::vector<std::vector<char>> &map)
 {
-    unsigned int distance_x{};
-    unsigned int distance_y{};
+    int height = map.size();
+    int width = map[0].size();
 
-    if (start_cell.x < current_cell.x)
-    {
-        distance_x = current_cell.x - start_cell.x;
-    }
-    else
-    {
-        distance_x = start_cell.x - current_cell.x;
-    }
-
-    if (start_cell.y < current_cell.y)
-    {
-        distance_y = current_cell.y - start_cell.y;
-    }
-    else
-    {
-        distance_y = start_cell.y - current_cell.y;
-    }
-
-    return distance_x + distance_y;
+    return cell.x >= 0 && cell.y >= 0 &&
+           cell.x < width && cell.y < height &&
+           map[cell.y][cell.x] != '#'; // '#' = obstacle/mur
 }
 
-void do_bfs(CellIndex start)
+void doBFS(CellIndex start, const std::vector<std::vector<char>> &map)
 {
     // Création de la file
     std::queue<CellIndex> cell_queue;
     std::set<CellIndex> visited;
 
+    // Grille de distances et Grille de directions
+    std::vector<std::vector<int>> distance_map(map.size(), std::vector<int>(map[0].size(), -1));
+    // std::vector<std::vector<Direction>> direction_map(
+    //     map.size(),
+    //     std::vector<Direction>(map[0].size(), Direction::None));
+
     cell_queue.push(start);
     visited.insert(start);
+    distance_map[start.y][start.x] = 0; // Distance du départ à lui-même
 
     int counter{};
+    size_t counter_map{};
+    size_t map_size{map.size() * map[0].size()};
 
     // Tant qu'il y a des éléments dans la file, on cherche les cases adjacentes
-    while (!cell_queue.empty())
+    while (!cell_queue.empty() && counter_map < map_size)
     {
-        if (counter == 8)
-        {
-            break;
-        }
 
         CellIndex current = cell_queue.front();
         cell_queue.pop();
 
         std::cout << "Visiting: (" << current.x << ", " << current.y << ")\n";
-
-        std::cout << "Distance :" << distance(start, current) << std::endl;
 
         // Les 4 voisins adjacents
         CellIndex neighbors[4] = {
@@ -64,16 +51,19 @@ void do_bfs(CellIndex start)
 
         for (auto &neighbor : neighbors)
         {
-            // Exemple de condition pour éviter d'aller dans des coordonnées négatives
-            if (neighbor.x >= 0 && neighbor.y >= 0 && visited.find(neighbor) == visited.end())
+            if (isValid(neighbor, map) && visited.find(neighbor) == visited.end())
             {
                 visited.insert(neighbor);
+                distance_map[neighbor.y][neighbor.x] = distance_map[current.y][current.x] + 1;
                 cell_queue.push(neighbor);
             }
         }
 
-        counter++;
+        std::cout << "Distance: " << distance_map[current.y][current.x] << std::endl;
+        counter_map++;
     }
 
     std::cout << "Visited size: " << visited.size() << "\n";
+    std::cout << map_size << "\n";
+    std::cout << counter_map << "\n";
 }
