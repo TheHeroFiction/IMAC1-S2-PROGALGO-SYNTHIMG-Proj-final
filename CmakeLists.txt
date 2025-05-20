@@ -41,3 +41,8 @@ add_executable(pathfinding src/mains/main_pathfinding.cpp src/prog/pathfinding.c
 target_include_directories(pathfinding PUBLIC src/headers)
 target_link_libraries(pathfinding ${ALL_LIBRARIES})
 target_compile_features(pathfinding PRIVATE cxx_std_20)
+
+add_executable(enemies src/mains/main_enemies.cpp src/prog/enemies.cpp src/prog/pathfinding.cpp src/prog/map.cpp src/prog/key_options.cpp)
+target_include_directories(enemies PUBLIC src/headers)
+target_link_libraries(enemies ${ALL_LIBRARIES})
+target_compile_features(enemies PRIVATE cxx_std_20)

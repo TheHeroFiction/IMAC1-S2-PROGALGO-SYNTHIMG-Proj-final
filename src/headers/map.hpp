@@ -7,6 +7,8 @@
 
 #include "key_options.hpp"
 
+extern GLBI_Convex_2D_Shape cell;
+
 std::vector<std::vector<char>> generate_map(int width, int height);
 
 void print_map(std::vector<std::vector<char>> const &map);
@@ -20,3 +22,5 @@ void init_map(std::vector<std::vector<char>> const &map, int width, int height, 
 void render_map();
 
 void render_heat_map();
+
+void heatmap_with_cell(std::vector<std::vector<char>> const &map);
