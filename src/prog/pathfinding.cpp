@@ -3,6 +3,9 @@
 // Vérifie si une position est valide sur la carte
 // La cell est-elle dans la map (donc supérieur ou égale à 0, inférieur à la longueur et largeur de la map, éviter les effets de bords)?
 // La cell n'est pas un mur '#'
+
+std::vector<std::vector<int>> distances{};
+
 bool isValid(const CellIndex &cell, const std::vector<std::vector<char>> &map)
 {
     int height = map.size();
@@ -66,4 +69,6 @@ void doBFS(CellIndex start, const std::vector<std::vector<char>> &map)
     std::cout << "Visited size: " << visited.size() << "\n";
     std::cout << map_size << "\n";
     std::cout << counter_map << "\n";
+
+    distances = distance_map;
 }

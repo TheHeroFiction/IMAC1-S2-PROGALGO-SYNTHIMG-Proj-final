@@ -32,7 +32,7 @@ set(ALL_LIBRARIES ${ALL_LIBRARIES} glbasimac)
 include_directories(lib/glbasimac/)
 set(CMAKE_COLOR_MAKEFILE ON)
 
-add_executable(map src/mains/main_map.cpp src/prog/map.cpp src/prog/key_options.cpp)
+add_executable(map src/mains/main_map.cpp src/prog/map.cpp src/prog/key_options.cpp src/prog/pathfinding.cpp)
 target_include_directories(map PUBLIC src/headers)
 target_link_libraries(map ${ALL_LIBRARIES})
 target_compile_features(map PRIVATE cxx_std_20)

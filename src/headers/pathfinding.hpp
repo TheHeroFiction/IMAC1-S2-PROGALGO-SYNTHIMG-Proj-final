@@ -5,6 +5,9 @@
 #include <iostream>
 #include <vector>
 
+// Variables
+extern std::vector<std::vector<int>> distances;
+
 // enum class Direction
 // {
 //     None,
