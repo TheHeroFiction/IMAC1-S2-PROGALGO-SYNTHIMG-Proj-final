@@ -9,8 +9,8 @@ std::vector<std::vector<char>> map_sec_ite {cellular_automata(map_first_ite)};
 std::vector<std::vector<char>> map_third_ite {cellular_automata(map_sec_ite)};
 std::vector<std::vector<char>> map_fourth_ite {cellular_automata(map_third_ite)};
 
-int width {500};
-int height {500};
+int windowWidth {500};
+int windowHeight {500};
 
 /* Espace virtuel */
 static const float GL_VIEW_SIZE = 500.f;
@@ -54,7 +54,7 @@ int main() {
 	glfwSetErrorCallback(onError);
 
     // Create a windowed mode window and its OpenGL context
-    GLFWwindow* window = glfwCreateWindow(width, height, "Map", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Map", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
         return -1;
@@ -70,8 +70,13 @@ int main() {
 		return -1;
 	}
 
+	myEngine.initGL();
+
+	
 	// Initialize Rendering Engine
-	init_map(new_map, width, height, GL_VIEW_SIZE);
+	init_map(map_fourth_ite, windowWidth, windowHeight, GL_VIEW_SIZE);
+
+	onWindowResized(window,windowWidth,windowHeight);
 
     glfwSetKeyCallback(window, key_callback);
 
@@ -103,21 +108,6 @@ int main() {
 			elapsedTime = glfwGetTime() - startTime;
 		}
 	}
-
-    std::cout << " RAW MAP " << std::endl;
-    print_map(new_map);
-    std::cout << std::endl;
-    std::cout << " MAP CELLULAR AUTOMATA 1ST" << std::endl;
-    print_map(map_first_ite);
-    std::cout << std::endl;
-    std::cout << " MAP CELLULAR AUTOMATA 2ND" << std::endl;
-    print_map(map_sec_ite);
-    std::cout << std::endl;
-    std::cout << " MAP CELLULAR AUTOMATA 3RD" << std::endl;
-    print_map(map_third_ite);
-    std::cout << std::endl;
-    std::cout << " MAP CELLULAR AUTOMATA 4TH" << std::endl;
-    print_map(map_fourth_ite);
 
     glfwTerminate();
     return 0;

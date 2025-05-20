@@ -6,9 +6,8 @@ using namespace glbasimac;
 GLBI_Convex_2D_Shape cell {};
 std::vector<std::vector<float>> cells_coords {};
 std::vector<std::vector<float>> cells_colors {};
-
-std::vector<float> color_floor {1.f,1.f,1.f, 1.f,1.f,1.f, 1.f,1.f,1.f, 1.f,1.f,1.f};
-std::vector<float> color_wall {0.f,0.f,0.f, 0.f,0.f,0.f, 0.f,0.f,0.f, 0.f,0.f,0.f };
+std::vector<float> color_floor {1.f,1.f,1.f};
+std::vector<float> color_wall {0.f,0.f,0.f};
 
 //fonctions
 std::vector<std::vector<char>> generate_map(int width, int height)
@@ -279,10 +278,10 @@ void init_map(std::vector<std::vector<char>> const& map, int width, int height, 
         {
             coords = 
             {
-                cell_height * row - view_size/2.f, cell_width * col - view_size/2.f, //high left corner
-                cell_height * row - view_size/2.f, cell_width * (col + 1) - view_size/2.f, //high right corner 
-                cell_height * (row + 1) - view_size/2.f, cell_width * (col + 1) - view_size/2.f, // low right corner
-                cell_height * (row + 1) - view_size/2.f, cell_width * col - view_size/2.f // low left corner
+                cell_height * col - view_size/2.f, -(cell_width * row - view_size/2.f), //high left corner
+                cell_height * col - view_size/2.f, -(cell_width * (row + 1) - view_size/2.f), //high right corner 
+                cell_height * (col + 1) - view_size/2.f, -(cell_width * (row + 1) - view_size/2.f), // low right corner
+                cell_height * (col + 1) - view_size/2.f, -(cell_width * row - view_size/2.f) // low left corner
             };
 
             cells_coords.push_back(coords);
@@ -299,14 +298,28 @@ void init_map(std::vector<std::vector<char>> const& map, int width, int height, 
             
         }
     }
-
-    cell.initShape({0.f,0.f, 0.f,5.f, 5.f,5.f, 5.f,0.f});
+    
+    cell.initShape(cells_coords[0]);
     cell.changeNature(GL_TRIANGLE_FAN);
 }
 
 void render_map()
 {
-    myEngine.setFlatColor(0.5f,0.5f,0.5f);
-    cell.drawShape();
-    std::cout<< cells_coords[0][0] << ',' << cells_coords[0][1] << std::endl;
+    int count {0};
+    for (int col {0}; col < 50; col++)
+    {
+        for (int row {0}; row < 50; row++)
+        {
+            myEngine.mvMatrixStack.pushMatrix();
+                Vector3D tr {0.f + 10.f * row, 0.f - 10.f*col,0.f};
+                myEngine.mvMatrixStack.addTranslation(tr);
+                myEngine.updateMvMatrix();
+                myEngine.setFlatColor(cells_colors[count][0],cells_colors[count][1],cells_colors[count][2]);
+                cell.drawShape();
+            myEngine.mvMatrixStack.popMatrix();
+            myEngine.updateMvMatrix();
+            count++;
+        }
+        
+    }
 }
