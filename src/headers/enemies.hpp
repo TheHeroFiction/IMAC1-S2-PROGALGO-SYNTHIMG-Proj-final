@@ -3,4 +3,6 @@
 #include "key_options.hpp"
 #include "pathfinding.hpp"
 
-std::vector<float> enemy_mvt(float x, float y, std::vector<std::vector<char>> const &map);
+void heatmap_with_cell(Map const &map);
+
+std::vector<float> enemy_mvt(float x, float y, Map const &map);

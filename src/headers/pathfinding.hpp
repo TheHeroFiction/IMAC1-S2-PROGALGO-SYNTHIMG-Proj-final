@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+#include "map.hpp"
+
 // Variables
 extern std::vector<std::vector<int>> distances;
 
@@ -46,5 +48,5 @@ struct CellIndex
 };
 
 unsigned int distance(CellIndex start_cell, CellIndex current_cell);
-bool isValid(const CellIndex &cell, const std::vector<std::vector<char>> &map);
-void doBFS(CellIndex start, const std::vector<std::vector<char>> &map);
+bool isValid(const CellIndex &cell, const Map &map);
+void doBFS(CellIndex start, const Map &map);

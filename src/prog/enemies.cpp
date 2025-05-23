@@ -3,7 +3,7 @@
 bool is_starting{true};
 bool is_ending{false};
 
-void heatmap_with_cell(std::vector<std::vector<char>> const &map)
+void heatmap_with_cell(Map const &map)
 {
 
     std::vector<float> next_mvt{490.f, 490.f};
@@ -50,7 +50,7 @@ void heatmap_with_cell(std::vector<std::vector<char>> const &map)
     myEngine.updateMvMatrix();
 }
 
-std::vector<float> enemy_mvt(float x, float y, std::vector<std::vector<char>> const &map)
+std::vector<float> enemy_mvt(float x, float y, Map const &map)
 {
     int current_x{static_cast<int>(x) / 10};
     int current_y{static_cast<int>(y) / 10};

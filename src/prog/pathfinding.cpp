@@ -6,24 +6,24 @@
 
 std::vector<std::vector<int>> distances{};
 
-bool isValid(const CellIndex &cell, const std::vector<std::vector<char>> &map)
+bool isValid(const CellIndex &cell, const Map &map)
 {
-    int height = map.size();
-    int width = map[0].size();
+    int height = map.content.size();
+    int width = map.content[0].size();
 
     return cell.x >= 0 && cell.y >= 0 &&
            cell.x < width && cell.y < height &&
-           map[cell.y][cell.x] != '#'; // '#' = obstacle/mur
+           map.content[cell.y][cell.x] != '#'; // '#' = obstacle/mur
 }
 
-void doBFS(CellIndex start, const std::vector<std::vector<char>> &map)
+void doBFS(CellIndex start, const Map &map)
 {
     // Création de la file
     std::queue<CellIndex> cell_queue;
     std::set<CellIndex> visited;
 
     // Grille de distances et Grille de directions
-    std::vector<std::vector<int>> distance_map(map.size(), std::vector<int>(map[0].size(), -1));
+    std::vector<std::vector<int>> distance_map(map.content.size(), std::vector<int>(map.content[0].size(), -1));
     // std::vector<std::vector<Direction>> direction_map(
     //     map.size(),
     //     std::vector<Direction>(map[0].size(), Direction::None));
@@ -34,7 +34,7 @@ void doBFS(CellIndex start, const std::vector<std::vector<char>> &map)
 
     int counter{};
     size_t counter_map{};
-    size_t map_size{map.size() * map[0].size()};
+    size_t map_size{map.content.size() * map.content[0].size()};
 
     // Tant qu'il y a des éléments dans la file, on cherche les cases adjacentes
     while (!cell_queue.empty() && counter_map < map_size)
