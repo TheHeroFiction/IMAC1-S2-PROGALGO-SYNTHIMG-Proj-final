@@ -16,6 +16,16 @@ bool isValid(const CellIndex &cell, const Map &map)
            map.content[cell.y][cell.x] != '#'; // '#' = obstacle/mur
 }
 
+bool isWall(const CellIndex &cell, const Map &map)
+{
+    int height = map.content.size();
+    int width = map.content[0].size();
+
+    return cell.x >= 0 && cell.y >= 0 &&
+           cell.x < width && cell.y < height &&
+           map.content[cell.y][cell.x] == '#'; // '#' = obstacle/mur
+}
+
 void doBFS(CellIndex start, const Map &map)
 {
     // Création de la file
@@ -46,11 +56,13 @@ void doBFS(CellIndex start, const Map &map)
         std::cout << "Visiting: (" << current.x << ", " << current.y << ")\n";
 
         // Les 4 voisins adjacents
-        CellIndex neighbors[4] = {
+        std::vector<CellIndex> neighbors = {
             {current.x + 1, current.y},
             {current.x - 1, current.y},
             {current.x, current.y + 1},
             {current.x, current.y - 1}};
+
+        std::cout << "Distance: " << distance_map[current.y][current.x] << std::endl;
 
         for (auto &neighbor : neighbors)
         {
@@ -60,9 +72,14 @@ void doBFS(CellIndex start, const Map &map)
                 distance_map[neighbor.y][neighbor.x] = distance_map[current.y][current.x] + 1;
                 cell_queue.push(neighbor);
             }
+            else if (isWall(neighbor, map) && visited.find(neighbor) == visited.end())
+            {
+                visited.insert(neighbor);
+                distance_map[neighbor.y][neighbor.x] = map.content[0].size() * 10;
+                // cell_queue.push(neighbor);
+            }
         }
 
-        std::cout << "Distance: " << distance_map[current.y][current.x] << std::endl;
         counter_map++;
     }
 

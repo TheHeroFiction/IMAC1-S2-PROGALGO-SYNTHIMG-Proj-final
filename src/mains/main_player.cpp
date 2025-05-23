@@ -1,18 +1,15 @@
 #include "player.hpp"
 
-
 using namespace glbasimac;
 
+Map new_map{generate_map(50, 50)};
+Map map_first_ite{cellular_automata(new_map)};
+Map map_sec_ite{cellular_automata(map_first_ite)};
+Map map_third_ite{cellular_automata(map_sec_ite)};
+Map map_fourth_ite{cellular_automata(map_third_ite)};
 
-std::vector<std::vector<char>> new_map {generate_map(50,50)};
-std::vector<std::vector<char>> map_first_ite {cellular_automata(new_map)};
-std::vector<std::vector<char>> map_sec_ite {cellular_automata(map_first_ite)};
-std::vector<std::vector<char>> map_third_ite {cellular_automata(map_sec_ite)};
-std::vector<std::vector<char>> map_fourth_ite {cellular_automata(map_third_ite)};
-
-
-int windowWidth {500};
-int windowHeight {500};
+int windowWidth{500};
+int windowHeight{500};
 
 /* Espace virtuel */
 static const float GL_VIEW_SIZE = 500.f;
@@ -21,66 +18,68 @@ static const float GL_VIEW_SIZE = 500.f;
 static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 static float aspectRatio = 1.0f;
 
-
 /* Error handling function */
-void onError(int error, const char* description) {
-	std::cout << "GLFW Error ("<<error<<") : " << description << std::endl;
+void onError(int error, const char *description)
+{
+	std::cout << "GLFW Error (" << error << ") : " << description << std::endl;
 }
 
-void onWindowResized(GLFWwindow* window, int width, int height)
+void onWindowResized(GLFWwindow *window, int width, int height)
 {
-	aspectRatio = width / (float) height;
+	aspectRatio = width / (float)height;
 	glViewport(0, 0, width, height);
-	if( aspectRatio > 1.0)
+	if (aspectRatio > 1.0)
 	{
-		myEngine.set2DProjection(-GL_VIEW_SIZE * aspectRatio/ 2.,
-		GL_VIEW_SIZE * aspectRatio / 2. ,
-		-GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.);
+		myEngine.set2DProjection(-GL_VIEW_SIZE * aspectRatio / 2.,
+								 GL_VIEW_SIZE * aspectRatio / 2.,
+								 -GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.);
 	}
 	else
 	{
 		myEngine.set2DProjection(-GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.,
-		-GL_VIEW_SIZE / (2. * aspectRatio), 
-		GL_VIEW_SIZE / (2. * aspectRatio));
+								 -GL_VIEW_SIZE / (2. * aspectRatio),
+								 GL_VIEW_SIZE / (2. * aspectRatio));
 	}
 }
 
+int main()
+{
+	// Initialize the library
+	if (!glfwInit())
+	{
+		return -1;
+	}
 
-int main() {
-    // Initialize the library
-    if (!glfwInit()) {
-        return -1;
-    }
-
-    /* Callback to a function if an error is rised by GLFW */
+	/* Callback to a function if an error is rised by GLFW */
 	glfwSetErrorCallback(onError);
 
-    // Create a windowed mode window and its OpenGL context
-    GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, "Player test", nullptr, nullptr);
-    if (!window) {
-        glfwTerminate();
-        return -1;
-    }
+	// Create a windowed mode window and its OpenGL context
+	GLFWwindow *window = glfwCreateWindow(windowWidth, windowHeight, "Player test", nullptr, nullptr);
+	if (!window)
+	{
+		glfwTerminate();
+		return -1;
+	}
 
-    glfwSetWindowSizeCallback(window,onWindowResized);
+	glfwSetWindowSizeCallback(window, onWindowResized);
 
-    // Make the window's context current
-    glfwMakeContextCurrent(window);
+	// Make the window's context current
+	glfwMakeContextCurrent(window);
 
 	// Intialize glad (loads the OpenGL functions)
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
 		return -1;
 	}
 
 	myEngine.initGL();
 
-	
 	// Initialize Rendering Engine
 	init_map(map_fourth_ite, windowWidth, windowHeight, GL_VIEW_SIZE);
 
-	onWindowResized(window,windowWidth,windowHeight);
+	onWindowResized(window, windowWidth, windowHeight);
 
-    glfwSetKeyCallback(window, key_callback_player);
+	glfwSetKeyCallback(window, key_callback_player);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -89,12 +88,12 @@ int main() {
 		double startTime = glfwGetTime();
 
 		/* Render here */
-		glClearColor(0.2f,0.f,0.f,0.f);
+		glClearColor(0.2f, 0.f, 0.f, 0.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-        // render here
-        player.update_player_position(FRAMERATE_IN_SECONDS);
-        player.render_player();
+		// render here
+		player.update_player_position(FRAMERATE_IN_SECONDS);
+		player.render_player();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -105,14 +104,13 @@ int main() {
 		/* Elapsed time computation from loop begining */
 		double elapsedTime = glfwGetTime() - startTime;
 		/* If to few time is spend vs our wanted FPS, we wait */
-		while(elapsedTime < FRAMERATE_IN_SECONDS)
+		while (elapsedTime < FRAMERATE_IN_SECONDS)
 		{
-			glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS-elapsedTime);
+			glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS - elapsedTime);
 			elapsedTime = glfwGetTime() - startTime;
 		}
-        
 	}
 
-    glfwTerminate();
-    return 0;
+	glfwTerminate();
+	return 0;
 }

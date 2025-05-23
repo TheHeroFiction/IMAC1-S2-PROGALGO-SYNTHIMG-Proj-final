@@ -10,27 +10,6 @@
 // Variables
 extern std::vector<std::vector<int>> distances;
 
-// enum class Direction
-// {
-//     None,
-//     Up,
-//     Down,
-//     Left,
-//     Right
-// };
-
-// struct DirOffset
-// {
-//     int dx, dy;
-//     Direction dir;
-// };
-
-// const DirOffset directions[4] = {
-//     {0, -1, Direction::Up},
-//     {0, 1, Direction::Down},
-//     {-1, 0, Direction::Left},
-//     {1, 0, Direction::Right}};
-
 struct CellIndex
 {
     int x;
@@ -49,4 +28,5 @@ struct CellIndex
 
 unsigned int distance(CellIndex start_cell, CellIndex current_cell);
 bool isValid(const CellIndex &cell, const Map &map);
+bool isWall(const CellIndex &cell, const Map &map);
 void doBFS(CellIndex start, const Map &map);

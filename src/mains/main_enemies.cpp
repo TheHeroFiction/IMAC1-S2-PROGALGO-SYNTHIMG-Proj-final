@@ -2,11 +2,11 @@
 
 using namespace glbasimac;
 
-std::vector<std::vector<char>> new_map{generate_map(50, 50)};
-std::vector<std::vector<char>> map_first_ite{cellular_automata(new_map)};
-std::vector<std::vector<char>> map_sec_ite{cellular_automata(map_first_ite)};
-std::vector<std::vector<char>> map_third_ite{cellular_automata(map_sec_ite)};
-std::vector<std::vector<char>> map_fourth_ite{cellular_automata(map_third_ite)};
+Map new_map{generate_map(50, 50)};
+Map map_first_ite{cellular_automata(new_map)};
+Map map_sec_ite{cellular_automata(map_first_ite)};
+Map map_third_ite{cellular_automata(map_sec_ite)};
+Map map_fourth_ite{cellular_automata(map_third_ite)};
 
 int windowWidth{500};
 int windowHeight{500};

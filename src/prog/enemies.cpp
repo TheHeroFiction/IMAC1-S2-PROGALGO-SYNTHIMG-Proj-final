@@ -3,10 +3,10 @@
 bool is_starting{true};
 bool is_ending{false};
 
+std::vector<float> next_mvt{490.f, 490.f};
+
 void heatmap_with_cell(Map const &map)
 {
-
-    std::vector<float> next_mvt{490.f, 490.f};
 
     for (int col{0}; col < 50; col++)
     {
@@ -32,6 +32,7 @@ void heatmap_with_cell(Map const &map)
         if (!is_ending)
         {
             next_mvt = enemy_mvt(next_mvt[0], next_mvt[1], map);
+            std::cout << "Next mvt: " << next_mvt[0] << "," << next_mvt[1] << std::endl;
 
             if (next_mvt[0] < 1.f && next_mvt[1] < 1.f)
             {
@@ -41,7 +42,7 @@ void heatmap_with_cell(Map const &map)
     }
 
     myEngine.mvMatrixStack.pushMatrix();
-    Vector3D cell_tr{next_mvt[0], next_mvt[1], 0.f};
+    Vector3D cell_tr{next_mvt[0], -next_mvt[1], 0.f};
     myEngine.mvMatrixStack.addTranslation(cell_tr);
     myEngine.updateMvMatrix();
     myEngine.setFlatColor(0.f, 0.f, 0.f);
@@ -58,28 +59,48 @@ std::vector<float> enemy_mvt(float x, float y, Map const &map)
 
     std::vector<float> next_mvt{};
 
-    std::vector<CellIndex> neighbors{
-        {current_x, current_y - 1},
-        {current_x + 1, current_y - 1},
+    // std::vector<CellIndex> neighbors{
+    //     {current_x, current_y - 1},
+    //     {current_x + 1, current_y - 1},
+    //     {current_x + 1, current_y},
+    //     {current_x + 1, current_y + 1},
+    //     {current_x, current_y + 1},
+    //     {current_x - 1, current_y + 1},
+    //     {current_x - 1, current_y},
+    //     {current_x - 1, current_y - 1},
+    // };
+    std::vector<CellIndex> neighbors = {
         {current_x + 1, current_y},
-        {current_x + 1, current_y + 1},
-        {current_x, current_y + 1},
-        {current_x - 1, current_y + 1},
         {current_x - 1, current_y},
-        {current_x - 1, current_y - 1},
-    };
+        {current_x, current_y + 1},
+        {current_x, current_y - 1}};
 
-    for (int i = 0; i < neighbors.size(); i++)
+    int min_dist = current_dist;
+    std::cout << "Current: " << min_dist << std::endl;
+
+    std::vector<float> best_mvt = {x, y}; // Par défaut, rester sur place
+
+    int counter_neighbor{};
+
+    for (const auto &neighbor : neighbors)
     {
-        if (isValid(neighbors[i], map))
+        if (isValid(neighbor, map) || isWall(neighbor, map))
         {
-            if (distances[current_x][current_y] > distances[neighbors[i].x][neighbors[i].y])
+            counter_neighbor++;
+            int neighbor_dist = distances[neighbor.x][neighbor.y];
+            std::cout << "Neighbor: " << neighbor_dist << std::endl;
+            if (neighbor_dist < min_dist)
             {
-                next_mvt = {
-                    static_cast<float>(neighbors[i].x) * 10.f, static_cast<float>(neighbors[i].y) * 10.f};
+                min_dist = neighbor_dist;
+                best_mvt = {
+                    static_cast<float>(neighbor.x) * 10.f,
+                    static_cast<float>(neighbor.y) * 10.f};
             }
         }
     }
 
-    return next_mvt;
+    std::cout << "counter :" << counter_neighbor << std::endl;
+    counter_neighbor = 0;
+
+    return best_mvt;
 }
