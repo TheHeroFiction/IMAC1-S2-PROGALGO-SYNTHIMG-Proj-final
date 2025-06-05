@@ -14,9 +14,11 @@ enum class GameState
 extern GameState currentState;
 extern float aspectRatio;
 extern const float GL_VIEW_SIZE;
-// menu.hpp
 extern SimpleText *TextRenderer;
 
 void drawMenu();
+void drawWin();
+void drawLose();
+void drawUI();
 
 void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);

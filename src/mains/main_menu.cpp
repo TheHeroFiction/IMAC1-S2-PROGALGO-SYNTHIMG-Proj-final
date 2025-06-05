@@ -107,10 +107,8 @@ int main()
         }
         else if (currentState == GameState::PLAYING)
         {
-            glClearColor(0.2f, 0.f, 0.f, 0.f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
             heatmap_with_cell(map_fourth_ite);
+            drawUI();
         }
 
         /* Swap front and back buffers */
