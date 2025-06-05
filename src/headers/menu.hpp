@@ -5,13 +5,6 @@
 #include "enemies.hpp"
 #include "simpletext.h"
 
-enum class GameState
-{
-    MENU,
-    PLAYING
-};
-
-extern GameState currentState;
 extern float aspectRatio;
 extern const float GL_VIEW_SIZE;
 extern SimpleText *TextRenderer;

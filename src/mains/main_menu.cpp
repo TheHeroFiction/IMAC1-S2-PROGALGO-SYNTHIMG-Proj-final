@@ -11,8 +11,6 @@ Map map_fourth_ite{cellular_automata(map_third_ite)};
 int windowWidth{500};
 int windowHeight{500};
 
-GameState currentState = GameState::MENU;
-
 /* Espace virtuel */
 const float GL_VIEW_SIZE = 500.f;
 
