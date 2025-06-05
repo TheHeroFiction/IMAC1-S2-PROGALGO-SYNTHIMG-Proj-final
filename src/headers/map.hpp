@@ -29,3 +29,5 @@ void render_map();
 
 void render_heat_map();
 
+Map generate_special_items_map(Map const& map);
+

@@ -47,7 +47,7 @@ void onWindowResized(GLFWwindow* window, int width, int height)
 
 
 int main() {
-	player.current_stage = map_fourth_ite;
+	player.current_stage = generate_special_items_map(map_fourth_ite);
     // Initialize the library
     if (!glfwInit()) {
         return -1;
@@ -114,6 +114,8 @@ int main() {
         
 	}
 	//print_map(player.current_stage);
+	//print_map(player.stage_rewards);
     glfwTerminate();
+	
     return 0;
 }

@@ -1,0 +1,2 @@
+1) Trying to break a border will result in a crash
+2) Touching the southern border will result in a crash

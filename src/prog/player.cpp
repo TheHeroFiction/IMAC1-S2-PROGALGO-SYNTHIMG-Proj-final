@@ -46,6 +46,7 @@ std::vector<float> player_collision_handler(std::vector<float> const& current_po
 
     std::vector<std::vector<int>> corner_in_cell{};
     std::vector<bool> is_gonna_encounter_wall { false, false, false, false};
+    std::vector<bool> is_trap {false, false, false, false};
     bool is_border {false};
 
     //calculate currents corners of our player
@@ -57,131 +58,78 @@ std::vector<float> player_collision_handler(std::vector<float> const& current_po
     if (keys_state[GLFW_KEY_W]) 
     {
         //Look for walls above player
-        if (map.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]] == '#')
+        if (map.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]] == '#' || map.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]] == 'I' || map.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]] == 'R')
         {
             is_gonna_encounter_wall[0] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[0] = false;
-        }
-        if (map.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == '#')
-        {
-            is_gonna_encounter_wall[1] = true;
-        }
-        else
-        {
-            is_gonna_encounter_wall[1] = false;
-        }
-
+        
         if (is_gonna_encounter_wall[0])
         {
             next_pos[0] = current_pos[0];
             next_pos[1] = (corner_in_cell[0][1]-1) * 1.f;
         }
-        /*
-        if (is_gonna_encounter_wall[1])
+
+        if (map.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]] == 'T')
         {
-            next_pos[0] = current_pos[0];
-            next_pos[1] = (corner_in_cell[1][1]-1) * 1.f;
+            is_trap[0] = true;
         }
-        */
+        
     }
     if (keys_state[GLFW_KEY_S]) 
     {
         //Look for walls under player
-        if (map.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == '#')
+        if (map.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == '#' || map.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == 'I' || map.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == 'R' )
         {
             is_gonna_encounter_wall[2] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[2] = false;
-        }
-        if (map.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == '#')
-        {
-            is_gonna_encounter_wall[3] = true;
-        }
-        else
-        {
-            is_gonna_encounter_wall[3] = false;
-        }
-
+    
         if (is_gonna_encounter_wall[2])
         {
             next_pos[0] = current_pos[0];
             next_pos[1] = (corner_in_cell[2][1]+1) * 1.f;
         }
-        /*
-        if (is_gonna_encounter_wall[3])
+
+        if (map.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == 'T')
         {
-            next_pos[0] = current_pos[0];
-            next_pos[1] = (corner_in_cell[3][1]+1) * 1.f;
+            is_trap[2] = true;
         }
-        */
     }
     if (keys_state[GLFW_KEY_A]) 
     {
         //Look for walls to the left of player
-        if (map.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]] == '#')
-        {
-            is_gonna_encounter_wall[0] = true;
-        }
-        else
-        {
-            is_gonna_encounter_wall[0] = false;
-        }
-        if (map.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == '#')
+        if (map.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == '#' || map.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == 'I' || map.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == 'R')
         {
             is_gonna_encounter_wall[3] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[3] = false;
-        }
-        /*
-        if (is_gonna_encounter_wall[0])
-        {
-            next_pos[0] = (corner_in_cell[0][0]+1) * 1.f;
-            next_pos[1] =  current_pos[1];
-        }
-        */
+
         if (is_gonna_encounter_wall[3])
         {
             next_pos[0] = (corner_in_cell[3][0]+1) * 1.f;
             next_pos[1] =  current_pos[1];
         }
+
+        if (map.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == 'T')
+        {
+            is_trap[3] = true;
+        }
     }
     if (keys_state[GLFW_KEY_D]) 
         {
             //Look for walls to the right of player
-            if (map.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == '#')
-            {
-                is_gonna_encounter_wall[2] = true;
-            }
-            else
-            {
-                is_gonna_encounter_wall[2] = false;
-            }
-            if (map.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == '#')
+            if (map.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == '#' || map.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == 'I' || map.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == 'R')
             {
                 is_gonna_encounter_wall[1] = true;
             }
-            else
-            {
-                is_gonna_encounter_wall[1] = false;
-            }
-            /*
-            if (is_gonna_encounter_wall[2])
-            {
-                next_pos[0] = (corner_in_cell[2][0]-1) * 1.f;
-                next_pos[1] =  current_pos[1];
-            }
-            */
+
             if (is_gonna_encounter_wall[1])
             {
                 next_pos[0] = (corner_in_cell[1][0]-1) * 1.f;
                 next_pos[1] =  current_pos[1];
+            }
+
+            if (map.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == 'T')
+            {
+                is_trap[1] = true;
             }
         }
     
@@ -193,7 +141,7 @@ std::vector<float> player_collision_handler(std::vector<float> const& current_po
             break;
         } 
         
-        if (next_pos[1] > 0.25f ||next_pos[1] < -49)
+        if (next_pos[1] > 0.25f ||next_pos[1] < -50)
         {
             is_border = true;
             break;
@@ -203,6 +151,22 @@ std::vector<float> player_collision_handler(std::vector<float> const& current_po
     if (is_border)
     {
         return current_pos;
+    }
+    if (is_trap[0])
+    {
+        player.is_alive = false;
+    }
+    if (is_trap[1])
+    {
+        player.is_alive = false;
+    }
+    if (is_trap[2])
+    {
+        player.is_alive = false;
+    }
+    if (is_trap[3])
+    {
+        player.is_alive = false;
     }
     return next_pos;
     
@@ -255,6 +219,7 @@ void Player::destroy_block()
 
     std::vector<std::vector<int>> corner_in_cell{};
     std::vector<bool> is_gonna_encounter_wall { false, false, false, false};
+    std::vector<bool> is_rewards { false, false, false, false};
 
     //calculate currents corners of our player
     for (int i {0}; i < new_corners.size(); i++)
@@ -269,26 +234,45 @@ void Player::destroy_block()
         {
             is_gonna_encounter_wall[0] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[0] = false;
-        }
+    
         if (current_stage.content[(-corner_in_cell[1][1])-1][corner_in_cell[1][0]] == '#')
         {
             is_gonna_encounter_wall[1] = true;
         }
-        else
+        
+        //Look for rewards above player
+        if (current_stage.content[(-corner_in_cell[0][1])-1][corner_in_cell[0][0]] == 'R')
         {
-            is_gonna_encounter_wall[1] = false;
+            is_rewards[0] = true;
         }
+        
+        if (current_stage.content[(-corner_in_cell[1][1])-1][corner_in_cell[1][0]] == 'R')
+        {
+            is_rewards[1] = true;
+        }
+       
         // Destroy wall above player
         if (is_gonna_encounter_wall[0])
         {
             current_stage.content[(-corner_in_cell[0][1])-1][corner_in_cell[0][0]] = ' ';
+            
         }
         if (is_gonna_encounter_wall[1])
         {
             current_stage.content[(-corner_in_cell[1][1])-1][corner_in_cell[1][0]] = ' ';
+            
+        }
+
+        // Destroy reward block above player
+        if (is_rewards[0])
+        {
+            current_stage.content[(-corner_in_cell[0][1])-1][corner_in_cell[0][0]] = ' ';
+            score++;
+        }
+        if (is_rewards[1])
+        {
+            current_stage.content[(-corner_in_cell[1][1])-1][corner_in_cell[1][0]] = ' ';
+            score++;
         }
     }
     if (keys_state[GLFW_KEY_S]) 
@@ -298,18 +282,23 @@ void Player::destroy_block()
         {
             is_gonna_encounter_wall[2] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[2] = false;
-        }
+        
         if (current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == '#')
         {
             is_gonna_encounter_wall[3] = true;
         }
-        else
+
+        //Look for rewards under player
+        if (current_stage.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == 'R')
         {
-            is_gonna_encounter_wall[3] = false;
+            is_rewards[2] = true;
         }
+        
+        if (current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] == 'R')
+        {
+            is_rewards[3] = true;
+        }
+        
         // Destroy wall under player
         if (is_gonna_encounter_wall[2])
         {
@@ -319,6 +308,18 @@ void Player::destroy_block()
         {
             current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] = ' ';
         }
+
+        // Destroy reward block under player
+        if (is_rewards[2])
+        {
+            current_stage.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] = ' ';
+            score++;
+        }
+        if (is_rewards[3])
+        {
+            current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]] = ' ';
+            score++;
+        }
     }
     if (keys_state[GLFW_KEY_A]) 
     {
@@ -327,18 +328,21 @@ void Player::destroy_block()
         {
             is_gonna_encounter_wall[0] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[0] = false;
-        }
         if (current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]-1] == '#')
         {
             is_gonna_encounter_wall[3] = true;
         }
-        else
+
+        //Look for rewards to the left of player
+        if (current_stage.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]-1] == 'R')
         {
-            is_gonna_encounter_wall[3] = false;
+            is_rewards[0] = true;
         }
+        if (current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]-1] == 'R')
+        {
+            is_rewards[3] = true;
+        }
+
         // Destroy wall to the left of player
         if (is_gonna_encounter_wall[0])
         {
@@ -348,6 +352,18 @@ void Player::destroy_block()
         {
             current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]-1] = ' ';
         }
+
+        // Destroy reward block to the left of player
+        if (is_rewards[0])
+        {
+            current_stage.content[(-corner_in_cell[0][1])][corner_in_cell[0][0]-1] = ' ';
+            score++;
+        }
+        if (is_rewards[3])
+        {
+            current_stage.content[(-corner_in_cell[3][1])][corner_in_cell[3][0]-1] = ' ';
+            score++;
+        }
     }
     if (keys_state[GLFW_KEY_D]) 
     {
@@ -356,18 +372,21 @@ void Player::destroy_block()
         {
             is_gonna_encounter_wall[2] = true;
         }
-        else
-        {
-            is_gonna_encounter_wall[2] = false;
-        }
         if (current_stage.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == '#')
         {
             is_gonna_encounter_wall[1] = true;
         }
-        else
+
+        //Look for rewards to the right of player
+        if (current_stage.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] == 'R')
         {
-            is_gonna_encounter_wall[1] = false;
+            is_rewards[2] = true;
         }
+        if (current_stage.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] == 'R')
+        {
+            is_rewards[1] = true;
+        }
+
         // Destroy wall above player
         if (is_gonna_encounter_wall[2])
         {
@@ -376,6 +395,18 @@ void Player::destroy_block()
         if (is_gonna_encounter_wall[1])
         {
             current_stage.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] = ' ';
+        }
+
+        // Destroy reward block above player
+        if (is_rewards[2])
+        {
+            current_stage.content[(-corner_in_cell[2][1])][corner_in_cell[2][0]] = ' ';
+            score++;
+        }
+        if (is_rewards[1])
+        {
+            current_stage.content[(-corner_in_cell[1][1])][corner_in_cell[1][0]] = ' ';
+            score++;
         }
     }
     

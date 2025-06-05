@@ -11,6 +11,7 @@ struct Player
     float speed {10.f};
     Map current_stage{};
     int score {0};
+    int max_score{0};
     bool is_alive  {true};
 
     void update_player_position(double const deltaTime);

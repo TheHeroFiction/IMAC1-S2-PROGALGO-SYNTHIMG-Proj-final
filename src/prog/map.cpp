@@ -305,10 +305,9 @@ void init_map(Map const &map, int width, int height, float view_size)
 
 void render_map()
 {
-    int count{0};
-    for (int row{0}; row < 50; row++)
+    for (int row{0}; row < player.current_stage.content.size(); row++)
     {
-        for (int col{0}; col < 50; col++)
+        for (int col{0}; col < player.current_stage.content[0].size(); col++)
         {
             myEngine.mvMatrixStack.pushMatrix();
             Vector3D tr{0.f + 10.f * col, 0.f - 10.f * row, 0.f};
@@ -318,6 +317,18 @@ void render_map()
             {
                 myEngine.setFlatColor(0.f, 0.f, 0.f);
             }
+            else if (player.current_stage.content[row][col] == 'I')
+            {
+                myEngine.setFlatColor(0.5f,0.f,0.5f);
+            }
+            else if (player.current_stage.content[row][col] == 'R')
+            {
+                myEngine.setFlatColor(0.5f,0.5f,0.f);
+            }
+            else if (player.current_stage.content[row][col] == 'T')
+            {
+                myEngine.setFlatColor(0.f,0.5f,0.5f);
+            }
             else
             {
                 myEngine.setFlatColor(1.f, 1.f,1.f);
@@ -325,7 +336,6 @@ void render_map()
             cell.drawShape();
             myEngine.mvMatrixStack.popMatrix();
             myEngine.updateMvMatrix();
-            count++;
         }
     }
 }
@@ -346,4 +356,51 @@ void render_heat_map()
             myEngine.updateMvMatrix();
         }
     }
+}
+
+Map generate_special_items_map(Map const& map)
+{
+    std::srand(std::time(nullptr));
+    Map rows{};
+    for (int i{0}; i < map.content.size(); i++)
+    {
+        std::vector<char> colunm{};
+        for (int j{0}; j < map.content[0].size(); j++)
+        {
+            if (map.content[i][j] == '#')
+            {
+                if ((std::rand() % 35 + 1) == 13)
+                {
+                    colunm.push_back('I'); // for Indestructible
+                    
+                }
+                else if ((std::rand() % 30 + 1) == 7 )
+                {
+                    colunm.push_back('R'); // for Reward
+                    player.max_score++;
+                    
+                }
+                else 
+                {
+                    colunm.push_back('#');
+                    
+                }
+            }
+            else
+            {
+                if ((std::rand() % 60 + 1) == 17)
+                {
+                    colunm.push_back('T'); // for Trap
+                    
+                }
+                else
+                {
+                    colunm.push_back(' ');
+                    
+                }
+            }
+        }
+        rows.content.push_back(colunm);
+    }
+    return rows;
 }
