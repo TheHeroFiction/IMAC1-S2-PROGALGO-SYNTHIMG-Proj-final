@@ -12,4 +12,5 @@ extern SimpleText *TextRenderer;
 void drawMenu();
 void drawWin();
 void drawLose();
+void drawPause();
 void drawUI();

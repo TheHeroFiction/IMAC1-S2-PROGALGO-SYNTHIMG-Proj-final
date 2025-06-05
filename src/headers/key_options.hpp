@@ -12,7 +12,8 @@ using namespace glbasimac;
 enum class GameState
 {
     MENU,
-    PLAYING
+    PLAYING,
+    PAUSE
 };
 
 extern GameState currentState;

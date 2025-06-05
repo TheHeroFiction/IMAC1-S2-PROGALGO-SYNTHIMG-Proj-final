@@ -79,6 +79,31 @@ void drawLose()
     TextRenderer->Render();
 };
 
+void drawPause()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Configure TextRenderer
+    TextRenderer->ResetFont();
+    TextRenderer->SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
+    TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
+    TextRenderer->EnableBlending(true);
+
+    // Draw "Play" at center of button (0,0)
+    TextRenderer->Label("Press S to continue", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
+    TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 20.f, SimpleText::CENTER);
+
+    TextRenderer->SetTextSize(SimpleText::SIZE_32);
+
+    TextRenderer->Label("PAUSE", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 50.f, SimpleText::CENTER);
+    TextRenderer->Render();
+};
+
 void drawUI()
 {
     // Configure TextRenderer

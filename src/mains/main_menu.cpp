@@ -106,6 +106,10 @@ int main()
             heatmap_with_cell(map_fourth_ite);
             drawUI();
         }
+        else if (currentState == GameState::PAUSE)
+        {
+            drawPause();
+        }
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
