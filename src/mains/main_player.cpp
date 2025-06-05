@@ -94,7 +94,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
         // render here
-        player.update_player_position(FRAMERATE_IN_SECONDS,player.current_stage);
+        player.update_player_position(FRAMERATE_IN_SECONDS);
         player.render_player();
 
 		/* Swap front and back buffers */
