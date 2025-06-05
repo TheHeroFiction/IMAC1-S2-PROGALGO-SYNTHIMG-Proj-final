@@ -112,14 +112,16 @@ void drawUI(const int &score, const int &time)
     TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer->EnableBlending(true);
 
-    TextRenderer->Label("Press R to Restart", 50.f, 40.f, SimpleText::CENTER);
-    TextRenderer->Label("Press O to quit", 50.f, 20.f, SimpleText::CENTER);
+    TextRenderer->SetTextSize(SimpleText::SIZE_32);
+
+    TextRenderer->Label("Press Echap to pause", 160.f, 40.f, SimpleText::CENTER);
+    TextRenderer->Label("Press O to quit", 130.f, 80.f, SimpleText::CENTER);
 
     std::string scoreText = "Score: " + std::to_string(score);
     std::string timeText = "Time: " + std::to_string(time);
 
-    TextRenderer->Label(scoreText.c_str(), 50.f, 60.f, SimpleText::CENTER);
-    TextRenderer->Label(timeText.c_str(), 50.f, 80.f, SimpleText::CENTER);
+    TextRenderer->Label(scoreText.c_str(), 80.f, 120.f, SimpleText::CENTER);
+    TextRenderer->Label(timeText.c_str(), 80.f, 160.f, SimpleText::CENTER);
 
     TextRenderer->Render();
 }
