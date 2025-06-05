@@ -93,24 +93,3 @@ void drawUI()
 
     TextRenderer->Render();
 }
-
-void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
-{
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && currentState == GameState::MENU)
-    {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-
-        int winW, winH;
-        glfwGetWindowSize(window, &winW, &winH);
-
-        float glX = (xpos / winW) * GL_VIEW_SIZE * aspectRatio - (GL_VIEW_SIZE * aspectRatio) / 2.0f;
-        float glY = ((winH - ypos) / winH) * GL_VIEW_SIZE - GL_VIEW_SIZE / 2.0f;
-
-        // Check Play button click
-        if (glX >= -50 && glX <= 50 && glY >= -25 && glY <= 25)
-        {
-            currentState = GameState::PLAYING;
-        }
-    }
-}

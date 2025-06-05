@@ -70,8 +70,6 @@ int main()
 
     glfwSetWindowSizeCallback(window, onWindowResized);
 
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-
     // Make the window's context current
     glfwMakeContextCurrent(window);
 

@@ -20,5 +20,3 @@ void drawMenu();
 void drawWin();
 void drawLose();
 void drawUI();
-
-void mouse_button_callback(GLFWwindow *window, int button, int action, int mods);
