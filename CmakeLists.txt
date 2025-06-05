@@ -8,6 +8,20 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Librairies
 
+# ---simpleText--- (fork from https://github.com/dsmtE/SimpleText)
+include(FetchContent)
+FetchContent_Declare(
+    simpletext
+    GIT_REPOSITORY https://github.com/dsmtE/SimpleText/
+)
+FetchContent_MakeAvailable(simpletext)
+
+# Ajoute le bon dossier d'include
+include_directories(${simpletext_SOURCE_DIR}/include())
+
+# Ajoute la lib dans les liens (si simpletext ajoute une cible simpletext::simpletext ou autre, tu peux l’utiliser ici)
+set(ALL_LIBRARIES ${ALL_LIBRARIES})
+
 # ---Add GL---
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
@@ -46,3 +60,8 @@ add_executable(enemies src/mains/main_enemies.cpp src/prog/enemies.cpp src/prog/
 target_include_directories(enemies PUBLIC src/headers)
 target_link_libraries(enemies ${ALL_LIBRARIES})
 target_compile_features(enemies PRIVATE cxx_std_20)
+
+add_executable(menu src/mains/main_menu.cpp src/prog/enemies.cpp src/prog/pathfinding.cpp src/prog/map.cpp src/prog/key_options.cpp src/prog/menu.cpp)
+target_include_directories(menu PUBLIC src/headers)
+target_link_libraries(menu ${ALL_LIBRARIES})
+target_compile_features(menu PRIVATE cxx_std_20)
