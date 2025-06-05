@@ -10,7 +10,7 @@ extern const float GL_VIEW_SIZE;
 extern SimpleText *TextRenderer;
 
 void drawMenu();
-void drawWin();
+void drawWin(const int &score, const int &time);
 void drawLose();
 void drawPause();
-void drawUI();
+void drawUI(const int &score, const int &time);

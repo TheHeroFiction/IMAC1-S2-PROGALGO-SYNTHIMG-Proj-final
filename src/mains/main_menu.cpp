@@ -8,6 +8,10 @@ Map map_sec_ite{cellular_automata(map_first_ite)};
 Map map_third_ite{cellular_automata(map_sec_ite)};
 Map map_fourth_ite{cellular_automata(map_third_ite)};
 
+// Var test
+int score_player{};
+int time_player{};
+
 int windowWidth{500};
 int windowHeight{500};
 
@@ -103,12 +107,24 @@ int main()
         }
         else if (currentState == GameState::PLAYING)
         {
+            score_player++;
+            time_player++;
+
             heatmap_with_cell(map_fourth_ite);
-            drawUI();
+            drawUI(score_player, time_player);
+
+            if (score_player == 100)
+            {
+                currentState = GameState::WIN;
+            }
         }
         else if (currentState == GameState::PAUSE)
         {
             drawPause();
+        }
+        else if (currentState == GameState::WIN)
+        {
+            drawWin(score_player, time_player);
         }
 
         /* Swap front and back buffers */

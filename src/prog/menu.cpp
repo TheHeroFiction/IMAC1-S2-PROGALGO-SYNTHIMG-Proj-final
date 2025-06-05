@@ -29,7 +29,7 @@ void drawMenu()
     TextRenderer->Render();
 }
 
-void drawWin()
+void drawWin(const int &score, const int &time)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -45,12 +45,21 @@ void drawWin()
     TextRenderer->EnableBlending(true);
 
     // Draw "Play" at center of button (0,0)
-    TextRenderer->Label("Press S to Start", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
-    TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 20.f, SimpleText::CENTER);
+    TextRenderer->Label("Press S to Start", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 80.f, SimpleText::CENTER);
+    TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 100.f, SimpleText::CENTER);
+
+    std::string scoreText = "Score: " + std::to_string(score);
+    std::string timeText = "Time: " + std::to_string(time);
 
     TextRenderer->SetTextSize(SimpleText::SIZE_32);
 
-    TextRenderer->Label("YOU WIN !!!", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 50.f, SimpleText::CENTER);
+    TextRenderer->Label(scoreText.c_str(), GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2), SimpleText::CENTER);
+    TextRenderer->Label(timeText.c_str(), GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 30.f, SimpleText::CENTER);
+
+    TextRenderer->SetTextSize(SimpleText::SIZE_48);
+
+    TextRenderer->Label("YOU WIN !!!", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 60.f, SimpleText::CENTER);
+
     TextRenderer->Render();
 };
 
@@ -104,7 +113,7 @@ void drawPause()
     TextRenderer->Render();
 };
 
-void drawUI()
+void drawUI(const int &score, const int &time)
 {
     // Configure TextRenderer
     TextRenderer->ResetFont();
@@ -113,8 +122,14 @@ void drawUI()
     TextRenderer->EnableBlending(true);
 
     // Draw "Play" at center of button (0,0)
-    TextRenderer->Label("Press R to Restart", 20.f, 40.f, SimpleText::CENTER);
-    TextRenderer->Label("Press O to quit", 20.f, 20.f, SimpleText::CENTER);
+    TextRenderer->Label("Press R to Restart", 50.f, 40.f, SimpleText::CENTER);
+    TextRenderer->Label("Press O to quit", 50.f, 20.f, SimpleText::CENTER);
+
+    std::string scoreText = "Score: " + std::to_string(score);
+    std::string timeText = "Time: " + std::to_string(time);
+
+    TextRenderer->Label(scoreText.c_str(), 50.f, 60.f, SimpleText::CENTER);
+    TextRenderer->Label(timeText.c_str(), 50.f, 80.f, SimpleText::CENTER);
 
     TextRenderer->Render();
 }

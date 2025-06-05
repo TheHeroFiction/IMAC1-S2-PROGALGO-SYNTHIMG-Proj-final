@@ -13,7 +13,8 @@ enum class GameState
 {
     MENU,
     PLAYING,
-    PAUSE
+    PAUSE,
+    WIN
 };
 
 extern GameState currentState;
