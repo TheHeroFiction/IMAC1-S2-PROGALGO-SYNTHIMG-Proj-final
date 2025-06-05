@@ -20,6 +20,7 @@ struct Player
 };
 
 extern Player player;
+extern GameState currentGameState;
 
 void key_callback_player(GLFWwindow* window, int key, int scancode, int action, int mods);
 Player init_player(float start_coord_x, float start_coord_y);

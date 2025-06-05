@@ -2,6 +2,9 @@
 
 Player player {init_player(0.f,0.f)};
 
+// Declare currentState with the correct type
+GameState currentGameState = GameState::MENU;
+
 void key_callback_player(GLFWwindow* window, int key, int scancode, int action, int mods) 
 {
     // update _keysState
@@ -20,7 +23,15 @@ void key_callback_player(GLFWwindow* window, int key, int scancode, int action, 
 		glfwSetWindowShouldClose(window,key);
 	}
 
-    
+    if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
+	{
+		currentGameState = GameState::PLAYING;
+	}
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		currentGameState = GameState::PAUSE;
+	}
 }
 
 Player init_player(float start_coord_x, float start_coord_y)

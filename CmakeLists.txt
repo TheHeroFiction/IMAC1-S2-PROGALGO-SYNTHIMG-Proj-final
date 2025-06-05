@@ -70,3 +70,8 @@ add_executable(player src/mains/main_player.cpp src/prog/player.cpp src/prog/pat
 target_include_directories(player PUBLIC src/headers)
 target_link_libraries(player ${ALL_LIBRARIES})
 target_compile_features(player PRIVATE cxx_std_20)
+
+add_executable(game src/mains/main_game.cpp src/prog/enemies.cpp src/prog/player.cpp src/prog/pathfinding.cpp src/prog/map.cpp src/prog/key_options.cpp src/prog/menu.cpp)
+target_include_directories(game PUBLIC src/headers)
+target_link_libraries(game ${ALL_LIBRARIES})
+target_compile_features(game PRIVATE cxx_std_20)

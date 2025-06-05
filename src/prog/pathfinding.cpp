@@ -13,7 +13,9 @@ bool isValid(const CellIndex &cell, const Map &map)
 
     return cell.x >= 0 && cell.y >= 0 &&
            cell.x < width && cell.y < height &&
-           map.content[cell.y][cell.x] != '#'; // '#' = obstacle/mur
+           map.content[cell.y][cell.x] != '#'
+           && map.content[cell.y][cell.x] != 'R'
+           && map.content[cell.y][cell.x] != 'I'  ; // '#' = obstacle/mur , 'I' = indestructible , 'R' = reward block
 }
 
 bool isWall(const CellIndex &cell, const Map &map)
@@ -23,7 +25,9 @@ bool isWall(const CellIndex &cell, const Map &map)
 
     return cell.x >= 0 && cell.y >= 0 &&
            cell.x < width && cell.y < height &&
-           map.content[cell.y][cell.x] == '#'; // '#' = obstacle/mur
+           map.content[cell.y][cell.x] == '#'
+           && map.content[cell.y][cell.x] == 'R'
+           && map.content[cell.y][cell.x] == 'I'; // '#' = obstacle/mur , 'I' = indestructible , 'R' = reward block
 }
 
 void doBFS(CellIndex start, const Map &map)
@@ -53,7 +57,7 @@ void doBFS(CellIndex start, const Map &map)
         CellIndex current = cell_queue.front();
         cell_queue.pop();
 
-        std::cout << "Visiting: (" << current.x << ", " << current.y << ")\n";
+        //std::cout << "Visiting: (" << current.x << ", " << current.y << ")\n";
 
         // Les 4 voisins adjacents
         std::vector<CellIndex> neighbors = {
@@ -62,7 +66,7 @@ void doBFS(CellIndex start, const Map &map)
             {current.x, current.y + 1},
             {current.x, current.y - 1}};
 
-        std::cout << "Distance: " << distance_map[current.y][current.x] << std::endl;
+        //std::cout << "Distance: " << distance_map[current.y][current.x] << std::endl;
 
         for (auto &neighbor : neighbors)
         {
@@ -83,9 +87,9 @@ void doBFS(CellIndex start, const Map &map)
         counter_map++;
     }
 
-    std::cout << "Visited size: " << visited.size() << "\n";
-    std::cout << map_size << "\n";
-    std::cout << counter_map << "\n";
+    //std::cout << "Visited size: " << visited.size() << "\n";
+    //std::cout << map_size << "\n";
+    //std::cout << counter_map << "\n";
 
     distances = distance_map;
 }

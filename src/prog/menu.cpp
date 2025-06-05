@@ -18,10 +18,10 @@ void drawMenu()
     TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer->EnableBlending(true);
 
-    TextRenderer->Label("Press S to Start", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
+    TextRenderer->Label("Press ENTER to Start", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
     TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 20.f, SimpleText::CENTER);
 
-    TextRenderer->SetTextSize(SimpleText::SIZE_32);
+    TextRenderer->SetTextSize(SimpleText::SIZE_16);
 
     TextRenderer->Label("Farmer vs Aliens", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 50.f, SimpleText::CENTER);
     TextRenderer->Render();
@@ -41,7 +41,7 @@ void drawWin(const int &score, const int &time)
     TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer->EnableBlending(true);
 
-    TextRenderer->Label("Press S to Start", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 80.f, SimpleText::CENTER);
+    //TextRenderer->Label("Press ENTER to Start", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 80.f, SimpleText::CENTER);
     TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 100.f, SimpleText::CENTER);
 
     std::string scoreText = "Score: " + std::to_string(score);
@@ -52,7 +52,7 @@ void drawWin(const int &score, const int &time)
     TextRenderer->Label(scoreText.c_str(), GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2), SimpleText::CENTER);
     TextRenderer->Label(timeText.c_str(), GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 30.f, SimpleText::CENTER);
 
-    TextRenderer->SetTextSize(SimpleText::SIZE_48);
+    TextRenderer->SetTextSize(SimpleText::SIZE_32);
 
     TextRenderer->Label("YOU WIN !!!", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 60.f, SimpleText::CENTER);
 
@@ -73,10 +73,10 @@ void drawLose()
     TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer->EnableBlending(true);
 
-    TextRenderer->Label("Press S to Start", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
+    //TextRenderer->Label("Press ENTER to Start", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
     TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 20.f, SimpleText::CENTER);
 
-    TextRenderer->SetTextSize(SimpleText::SIZE_32);
+    TextRenderer->SetTextSize(SimpleText::SIZE_16);
 
     TextRenderer->Label("YOU LOSE !!!", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 50.f, SimpleText::CENTER);
     TextRenderer->Render();
@@ -96,10 +96,10 @@ void drawPause()
     TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer->EnableBlending(true);
 
-    TextRenderer->Label("Press S to continue", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
+    TextRenderer->Label("Press ENTER to continue", GL_VIEW_SIZE / 2, GL_VIEW_SIZE / 2, SimpleText::CENTER);
     TextRenderer->Label("Press O to quit", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) + 20.f, SimpleText::CENTER);
 
-    TextRenderer->SetTextSize(SimpleText::SIZE_32);
+    TextRenderer->SetTextSize(SimpleText::SIZE_16);
 
     TextRenderer->Label("PAUSE", GL_VIEW_SIZE / 2, (GL_VIEW_SIZE / 2) - 50.f, SimpleText::CENTER);
     TextRenderer->Render();
@@ -108,11 +108,11 @@ void drawPause()
 void drawUI(const int &score, const int &time)
 {
     TextRenderer->ResetFont();
-    TextRenderer->SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::BLACK);
+    TextRenderer->SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::BLUE);
     TextRenderer->SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer->EnableBlending(true);
 
-    TextRenderer->SetTextSize(SimpleText::SIZE_32);
+    TextRenderer->SetTextSize(SimpleText::SIZE_16);
 
     TextRenderer->Label("Press Echap to pause", 160.f, 40.f, SimpleText::CENTER);
     TextRenderer->Label("Press O to quit", 130.f, 80.f, SimpleText::CENTER);

@@ -14,7 +14,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 		glfwSetWindowShouldClose(window, key);
 	}
 
-	if (key == GLFW_KEY_S && action == GLFW_PRESS)
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	{
 		currentState = GameState::PLAYING;
 	}

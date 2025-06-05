@@ -14,7 +14,8 @@ enum class GameState
     MENU,
     PLAYING,
     PAUSE,
-    WIN
+    WIN,
+    LOSE
 };
 
 extern GameState currentState;
