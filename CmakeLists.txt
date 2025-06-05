@@ -46,7 +46,7 @@ set(ALL_LIBRARIES ${ALL_LIBRARIES} glbasimac)
 include_directories(lib/glbasimac/)
 set(CMAKE_COLOR_MAKEFILE ON)
 
-add_executable(map src/mains/main_map.cpp src/prog/map.cpp src/prog/key_options.cpp src/prog/pathfinding.cpp)
+add_executable(map src/mains/main_map.cpp src/prog/map.cpp src/prog/key_options.cpp src/prog/pathfinding.cpp src/prog/player.cpp)
 target_include_directories(map PUBLIC src/headers)
 target_link_libraries(map ${ALL_LIBRARIES})
 target_compile_features(map PRIVATE cxx_std_20)
@@ -65,3 +65,8 @@ add_executable(menu src/mains/main_menu.cpp src/prog/enemies.cpp src/prog/pathfi
 target_include_directories(menu PUBLIC src/headers)
 target_link_libraries(menu ${ALL_LIBRARIES})
 target_compile_features(menu PRIVATE cxx_std_20)
+
+add_executable(player src/mains/main_player.cpp src/prog/player.cpp src/prog/pathfinding.cpp src/prog/map.cpp src/prog/key_options.cpp)
+target_include_directories(player PUBLIC src/headers)
+target_link_libraries(player ${ALL_LIBRARIES})
+target_compile_features(player PRIVATE cxx_std_20)

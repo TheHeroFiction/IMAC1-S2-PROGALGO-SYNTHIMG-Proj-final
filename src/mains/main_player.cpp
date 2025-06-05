@@ -47,6 +47,7 @@ void onWindowResized(GLFWwindow* window, int width, int height)
 
 
 int main() {
+	player.current_stage = map_fourth_ite;
     // Initialize the library
     if (!glfwInit()) {
         return -1;
@@ -76,8 +77,8 @@ int main() {
 
 	
 	// Initialize Rendering Engine
-	init_map(map_fourth_ite, windowWidth, windowHeight, GL_VIEW_SIZE);
-
+	init_map(player.current_stage, windowWidth, windowHeight, GL_VIEW_SIZE);
+	
 	onWindowResized(window,windowWidth,windowHeight);
 
     glfwSetKeyCallback(window, key_callback_player);
@@ -93,7 +94,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
         // render here
-        player.update_player_position(FRAMERATE_IN_SECONDS,map_fourth_ite);
+        player.update_player_position(FRAMERATE_IN_SECONDS,player.current_stage);
         player.render_player();
 
 		/* Swap front and back buffers */
@@ -112,7 +113,7 @@ int main() {
 		}
         
 	}
-	print_map(map_fourth_ite);
+	//print_map(player.current_stage);
     glfwTerminate();
     return 0;
 }

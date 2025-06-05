@@ -1,5 +1,6 @@
 #include "map.hpp"
 #include "pathfinding.hpp"
+#include "player.hpp"
 
 using namespace glbasimac;
 
@@ -305,15 +306,22 @@ void init_map(Map const &map, int width, int height, float view_size)
 void render_map()
 {
     int count{0};
-    for (int col{0}; col < 50; col++)
+    for (int row{0}; row < 50; row++)
     {
-        for (int row{0}; row < 50; row++)
+        for (int col{0}; col < 50; col++)
         {
             myEngine.mvMatrixStack.pushMatrix();
-            Vector3D tr{0.f + 10.f * row, 0.f - 10.f * col, 0.f};
+            Vector3D tr{0.f + 10.f * col, 0.f - 10.f * row, 0.f};
             myEngine.mvMatrixStack.addTranslation(tr);
             myEngine.updateMvMatrix();
-            myEngine.setFlatColor(cells_colors[count][0], cells_colors[count][1], cells_colors[count][2]);
+            if (player.current_stage.content[row][col] == '#')
+            {
+                myEngine.setFlatColor(0.f, 0.f, 0.f);
+            }
+            else
+            {
+                myEngine.setFlatColor(1.f, 1.f,1.f);
+            }
             cell.drawShape();
             myEngine.mvMatrixStack.popMatrix();
             myEngine.updateMvMatrix();

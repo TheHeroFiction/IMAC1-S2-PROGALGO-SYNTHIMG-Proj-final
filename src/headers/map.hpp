@@ -7,6 +7,7 @@
 
 #include "key_options.hpp"
 
+
 struct Map
 {
     std::vector<std::vector<char>> content;
