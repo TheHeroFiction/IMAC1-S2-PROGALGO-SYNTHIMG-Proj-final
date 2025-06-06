@@ -5,6 +5,14 @@
 - Use the executable named game
 - And voilà you can play our game in its current state
 
+## Color signification
+- light green: player
+- white: path where u can walk
+- teal: trap that kills you
+- black: destructible block
+- violet: indestructible block
+- yellow: breakable rewards block 
+
 ## How to play
 - player mouvement : ZQSD for AZERTY and WASD for QWERTY
 - destroy block: U
